@@ -29,7 +29,7 @@ function HospitalSearch() {
   const [map, setMap] = useState();
   const [flag, setFlag] = useState(false);
   const { isLoaded } = useLoadScript({
-    googleMapsApiKey: "AIzaSyA61kKFRHneDlKcgKa7lCfOKk7zV1LTh1Q",
+    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
     libraries
   })
 
