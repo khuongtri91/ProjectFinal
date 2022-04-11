@@ -8,7 +8,6 @@ class LoginController {
             let pool = await sql.connect(config);
             let result = await pool.request().query('Select * from TaiKhoan');
             res.json(result.recordset);
-            sql.close();
         } catch (err) {
             assert.equal(null, err);
         }
@@ -19,7 +18,6 @@ class LoginController {
             let pool = await sql.connect(config);
             let result = await pool.request().query(`EXEC FindUser '${email}'`);
             res.json(result.recordset);
-            sql.close();
         } catch (err) {
             assert.equal(null, err);
         }

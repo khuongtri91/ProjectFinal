@@ -1,9 +1,9 @@
 const express = require('express');
-const mssql = require('mssql');
 const port = 3001;
 const app = express();
 const route = require('./src/routes');
 const cors = require('cors');
+require('dotenv').config();
 
 app.use(express.urlencoded({extended: false}));
 app.use(express.json());

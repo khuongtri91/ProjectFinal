@@ -1,116 +1,134 @@
-import React, { Component } from "react";
+import React, { useEffect, useLayoutEffect, useState, useRef, Component }from "react";
 import Slider from "react-slick";
-export default class HomeContent extends Component {
-  render() {
-    const settings = {
-      dots: true,
-      infinite: true,
-      speed: 500,
-      slidesToShow: 1,
-      slidesToScroll: 1,
-    };
+import { Link, useNavigate } from 'react-router-dom';
+import { getCookie, setCookie, removeCookie } from '../../cookie/cookieHandler';
+import axios from 'axios';
+import ChatBox from '../ChatBox/ChatBox';
+import BtnRequest from '../Button/BtnRequest';
+import AlertRequest from '../Alert/AlertRequest';
+import './style.css';
+
+export const AdvisorContext = React.createContext();
+
+function HomeContent() {
+    const settings = {dots: true, infinite: true, speed: 500, slidesToShow: 1, slidesToScroll: 1};
+    const userInfo = getCookie('userAccess').split(',');
+    const [advisorList, setAdvisorList] = useState([]);
+    const [illness, setIllness] = useState([]);
+    const [imageIllness, setImageillness] = useState([]);
+    const [type, setType] = useState();
+    const chatRef = useRef(), alertRef = useRef();
+    const [advisorInfo, setAdvisorInfo] = useState('');
+    
+    useEffect(() => {
+      async function fetchData() {
+        const { data } = await axios.get('http://localhost:3001/getAdvisorList');
+        setAdvisorList(data);
+      }
+      fetchData();
+    }, []);
+    useLayoutEffect(() => {
+      setCookie('numPost', '');
+    }, [])
+    useEffect(() => {
+      async function fetchData() {
+        const { data } = await axios.get(`http://localhost:3001/getIllness`);
+        setIllness(data);
+      }
+      fetchData();
+    }, []);
+    useEffect(() => {
+      async function fetchData() {
+        const { data } = await axios.get(`http://localhost:3001/Illness/getIllnessImage`);
+        setImageillness(data);
+      }
+      fetchData();
+    }, []);
+    useEffect(() => {
+      async function fetchData() {          
+        const { data } = await axios.get(`http://localhost:3001/getAccountType/${parseInt(userInfo[0])}`);
+        setType(data[0].tenLoaiTaiKhoan);        
+      }
+      if(userInfo[0] !== '') fetchData();
+      else setType();
+    }, []);
+    function handleRequest(advisor) {
+      if(userInfo[0] !== '') {
+        setAdvisorInfo(advisor);   
+        chatRef.current.chatappShow();
+      }
+      else {
+        alertRef.current.style.display = 'flex';
+      }
+    }
+    
+
     return (
-      <>
         <div className="abc">
           <div className="banner-inner pt-5">
             <div className="container">
               <div className="row"></div>
             </div>
             <div className="container">
-              <div className="row">
-                <div className="col-lg-5">
-                  <div className="thumb after-left-top">
-                    <img
-                      src="./images/blog/blog-6.jpg"
-                      alt="img"
-                      className="img-thumbnail"
-                    />
-                  </div>
-                  <div className="banner-details mt-4 mt-lg-0">
-                    <h4>
-                      <a href="#">
-                        Biến chứng hậu COVID-19 ở trẻ em: Làm thế nào để giúp
-                        con vượt qua?
-                      </a>
-                    </h4>
-                    <p>
-                      Tính đến thời điểm hiện tại thì có hàng trăm nghìn trẻ em
-                      Việt Nam đã nhiễm SARS-CoV-2. Điều may mắn là hầu hết các
-                      trẻ nhiễm COVID-19 đều nhẹ và nhanh phục hồi hơn
-                    </p>
-                  </div>
-                </div>
-                <div className="col-lg-2">
-                  <div className="thumb after-left-top">
-                    <img
-                      src="./images/blog/blog-6.jpg"
-                      alt="img"
-                      className="img-thumbnail"
-                    />
-                  </div>
-                  <div className="banner-details mt-4 mt-lg-0">
-                    <h6>
-                      <a href="#">
-                        Ho có đờm uống thuốc gì? Tác dụng phụ và những
-                      </a>
-                    </h6>
-                    <p>Tính đến thời điểm hiện tại thì có ...</p>
-                  </div>
-                </div>
-                <div className="col-lg-5">
-                  <div className="media border-bottom py-3">
-                    <a href="#">
-                      <img
-                        className="mr-4"
-                        src="images/blog/blog-1.jpg"
-                        alt=""
-                        height={70}
-                      />
-                    </a>
-                    <div className="media-body">
-                      <h6 className="my-2">
-                        <a href="#">
-                          Hướng dẫn bổ sung vitamin E đúng cách, đúng liều, đúng
-                          lúc
-                        </a>
-                      </h6>
-                      <span className="text-sm text-muted">3 ngày trước</span>
+              {illness.length >= 1 && imageIllness.length >= 1 &&                                            
+                  <div className="row">
+                    <div className="col-lg-5">
+                      <Link className="thumb after-left-top" to="/Illness" onClick={() => setCookie('numPost', 1)}>
+                        <img src={require(`../../../public/images/dtb/${imageIllness[0].anh}`)} className="img-thumbnail" />
+                      </Link>
+                      <div className="banner-details mt-4 mt-lg-0">
+                        <h3 style={{marginTop: '1.4rem'}}>
+                          <Link to="/Illness" onClick={() => setCookie('numPost', 1)}>
+                            {illness[0].tieuDeBenh}
+                          </Link>
+                        </h3>
+                        <p>
+                          {illness[0].chiTietBenh.slice(0, 180)}
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                  <div className="media border-bottom py-3">
-                    <a href="#">
-                      <img
-                        className="mr-4"
-                        src="images/blog/blog-8.jpg"
-                        alt=""
-                        height={70}
-                      />
-                    </a>
-                    <div className="media-body">
-                      <h6 className="my-2">
-                        <a href="#">Đau dây chằn chéo </a>
-                      </h6>
-                      <span className="text-sm text-muted">1 giờ trước</span>
+                    <div className="col-lg-2">                          
                     </div>
-                  </div>
-                  <div className="media py-3">
-                    <a href="#">
-                      <img
-                        className="mr-4"
-                        src="images/blog/blog-4.jpg"
-                        alt=""
-                        height={70}
-                      />
-                    </a>
-                    <div className="media-body">
-                      <h6 className="my-2">
-                        <a href="#">Cái hậu Covid chủng Onmicro</a>
-                      </h6>
-                      <span className="text-sm text-muted">7 giờ trước</span>
+                    <div className="col-lg-5">
+                      <div className="media border-bottom py-3">
+                        <Link to="/Illness" onClick={() => setCookie('numPost', 5)} >
+                          <img
+                            className="mr-4"
+                            src={require(`../../../public/images/dtb/${imageIllness[4].anh}`)}
+                            alt=""
+                            height={70}
+                          />
+                        </Link>
+                        <div className="media-body">
+                          <h3 className="my-2">
+                            <div>
+                              <Link to="/Illness" onClick={() => setCookie('numPost', 5)}>
+                                {illness[4].tieuDeBenh}
+                              </Link>
+                            </div>                  
+                          </h3>
+                          <span className="text-sm text-muted">{illness[4].chiTietBenh.slice(0, 180)}</span>
+                        </div>
+                      </div>
+                      <div className="media border-bottom py-3">
+                        <Link to="/Illness" onClick={() => setCookie('numPost', 9)}>
+                          <img
+                            className="mr-4"
+                            src={require(`../../../public/images/dtb/${imageIllness[8].anh}`)}
+                            alt=""
+                            height={70}
+                          />
+                        </Link>
+                        <div className="media-body">
+                          <h3 className="my-2">
+                            <Link to="/Illness" onClick={() => setCookie('numPost', 9)}>{illness[8].tieuDeBenh}</Link>
+                          </h3>
+                          <span className="text-sm text-muted">{illness[8].chiTietBenh.slice(0, 180)}</span>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div>
-              </div>
+                  </div>                                                                                  
+              }          
             </div>
           </div>
           <section className="section testimonial-2 gray-bg">
@@ -125,104 +143,42 @@ export default class HomeContent extends Component {
               </div>
             </div>
           </section>
-          <div class="container">
+          <div className="container">
             <Slider {...settings}>
-              <div>
-                <div className="col-lg-4 col-sm-6 col-md-6">
-                  <div className="contact-block mb-4 mb-lg-0">
-                    <div className="testimonial-block style-2  gray-bg">
-                      <i className="icofont-quote-right" />
-                      <div className="testimonial-thumb">
-                        <a href="thongtinchuyengia.html">
-                          <img
-                            src="images/team/test-thumb1.jpg"
-                            alt=""
-                            className="img-fluid"
-                          />
-                        </a>
+                { advisorList && advisorList.map((obj, index) => {
+                    return (
+                      <div key={obj.email}>
+                        <div className="col-lg-4 col-sm-6 col-md-6" >
+                          <div>
+                            <div className="contact-block mb-4 mb-lg-0" >
+                              <div className="testimonial-block style-2  gray-bg">
+                                <i className="icofont-quote-right" />
+                                <div className="testimonial-thumb">
+                                  <Link to="">
+                                    <img src={require(`../../../public/images/dtb/${obj.anh}`)} alt="" className="img-fluid" />                                                     
+                                  </Link>                                                                   
+                                </div>
+                                <div className="client-info">                                
+                                  <span style={{display: 'block', fontWeight: 'bold'}}>{obj.ten}</span>
+                                  <span>{obj.email}</span>
+                                  <p>
+                                    <Link to="">Xem Thông tin chuyên gia</Link>
+                                  </p>
+                                  {(type === 'User' && <BtnRequest handleRequest={handleRequest} obj={obj} />) || (!type && <BtnRequest handleRequest={handleRequest} obj={obj} />)}
+                                </div>                  
+                              </div>        
+                            </div>
+                          </div>
+                        </div>
                       </div>
-                      <div className="client-info ">
-                        <h4>
-                          <a href="thongtinchuyengia.html">service</a>
-                        </h4>
-                        <span>John Partho</span>
-                        <p>
-                          <a href="thongtinchuyengia.html">
-                            Xem Thông tin chuyên gia
-                          </a>
-                        </p>
-                        <button className="btn-tuvan"> yêu cầu tư vấn</button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <div className="col-lg-4 col-sm-6 col-md-6">
-                  <div className="contact-block mb-4 mb-lg-0">
-                    <div className="testimonial-block style-2  gray-bg">
-                      <i className="icofont-quote-right" />
-                      <div className="testimonial-thumb">
-                        <a href="thongtinchuyengia.html">
-                          <img
-                            src="images/team/test-thumb1.jpg"
-                            alt=""
-                            className="img-fluid"
-                          />
-                        </a>
-                      </div>
-                      <div className="client-info ">
-                        <h4>
-                          <a href="thongtinchuyengia.html">service</a>
-                        </h4>
-                        <span>John Partho</span>
-                        <p>
-                          <a href="thongtinchuyengia.html">
-                            Xem Thông tin chuyên gia
-                          </a>
-                        </p>
-                        <button className="btn-tuvan"> yêu cầu tư vấn</button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <div className="col-lg-4 col-sm-6 col-md-6">
-                  <div className="contact-block mb-4 mb-lg-0">
-                    <div className="testimonial-block style-2  gray-bg">
-                      <i className="icofont-quote-right" />
-                      <div className="testimonial-thumb">
-                        <a href="thongtinchuyengia.html">
-                          <img
-                            src="images/team/test-thumb1.jpg"
-                            alt=""
-                            className="img-fluid"
-                          />
-                        </a>
-                      </div>
-                      <div className="client-info ">
-                        <h4>
-                          <a href="thongtinchuyengia.html">service</a>
-                        </h4>
-                        <span>John Partho</span>
-                        <p>
-                          <a href="thongtinchuyengia.html">
-                            Xem Thông tin chuyên gia
-                          </a>
-                        </p>
-                        <button className="btn-tuvan"> yêu cầu tư vấn</button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+                    )                   
+                })}          
             </Slider>
-          </div>
+          </div>               
+          <ChatBox ref={chatRef} maNguoiGui={parseInt(userInfo[0])} maNguoiNhan={advisorInfo.maNguoiDung} />            
+          <AlertRequest ref={alertRef} />
         </div>
-      </>
+        
     );
-  }
 }
-
-// export default HomeContent;
+export default HomeContent;

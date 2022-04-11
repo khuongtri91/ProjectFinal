@@ -10,12 +10,6 @@
     --color-background-image: linear-gradient(#e3f2ff, var(--color-white));
     --color-texrgray1: #9b9b9b;
 }
-html {
-    font-family: 'Open Sans', sans-serif;
-    font-size: 62.5%;
-    box-sizing: border-box;
-    line-height: 1.6rem;
-}
 #grid {
     width: 1200px;
     max-width: 100%;
@@ -35,7 +29,7 @@ html {
     top: 8vh;
     position: relative;
 }
-#modal_title {
+#modal_title1 {
     position: relative;
     font-size: 2.2rem;
     color: #4d8dff;
@@ -43,6 +37,7 @@ html {
     padding: 1.6rem 0;
     bottom: 2.4rem;
     text-decoration: none;
+    left: 1.4rem;
 }
 #formDN {
     position: relative;
@@ -91,6 +86,7 @@ form {
     box-shadow: 0.2rem 0.2rem 0.4rem rgba(0,0,0,0.05);
     outline-color: #75a7ff;
     margin-top: 1.6rem;
+    text-indent: 1.2rem;
 }
 #formGroup_input2 {
     position: relative;
@@ -102,6 +98,7 @@ form {
     box-shadow: 0.2rem 0.2rem 0.4rem rgba(0,0,0,0.05);
     outline-color: #75a7ff;
     margin-top: 1.6rem;
+    text-indent: 1.2rem;
 }
 ::placeholder {
     text-indent: 1.2rem;

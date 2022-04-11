@@ -21,5 +21,5 @@ export function getCookie(cname) {
     return "";
 }
 export function removeCookie(cname) {
-    document.cookie = cname +'=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+    document.cookie = cname +'=localhost:3000; expires=Thu, 0 Dec 2015 12:00:00 UTC;';
 }

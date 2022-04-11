@@ -23,9 +23,7 @@ function Footer() {
                     <div class="footer-btm py-4 mt-5">			
                         <div class="row">
                             <div class="col-lg-4">
-                                <a class="backtop js-scroll-trigger" href="#top">
-                                    <i class="icofont-long-arrow-up"></i>
-                                </a>
+                                
                             </div>
                         </div>
                     </div>

@@ -43,15 +43,7 @@ html {
     padding: 1.6rem 0;
     bottom: 2.4rem;
     text-decoration: none;
-}
-#formDN {
-    position: relative;
-    margin-top: 2rem;
-    background-color: #fff;
-    width: 100%;
-    height: 100%;
-    border-radius: 1.2rem;
-    box-shadow: 0.2rem 0.2rem 0.4rem rgba(0,0,0,0.05);
+    left: 4rem;
 }
 form {
     position: relative;
@@ -81,18 +73,7 @@ form {
 #formGroup {
     margin-top: 2rem;
 }
-#formGroup_input1 {
-    position: relative;
-    font-size: 1.6rem;
-    height: 4.8rem;
-    border-radius: 1rem;
-    width: 90%;
-    border: 1px solid #e4e8ec;
-    box-shadow: 0.2rem 0.2rem 0.4rem rgba(0,0,0,0.05);
-    outline-color: #75a7ff;
-    margin-top: 1.6rem;
-}
-#formGroup_input2 {
+.formGroup_input {
     position: relative;
     font-size: 1.6rem;
     height: 4.8rem;
@@ -106,32 +87,9 @@ form {
 ::placeholder {
     text-indent: 1.2rem;
 }
-#formGroup_input1:focus {
+.formGroup_input:focus {
     text-indent: 1.2rem;
     height: 4.8rem;
-}
-#formGroup_input2:focus {
-    text-indent: 1.2rem;
-    height: 4.8rem;
-}
-#formDN_btn {
-    display: block;
-    width: 90%;
-    height: 4.8rem;
-    background-color: #2d87f3;
-    color: #fff;
-    font-size: 1.6rem;
-    text-align: center;
-    margin-top: 2.8rem;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 1.2rem;
-    border-radius: 1rem;
-    border: 1px solid #fff;
-    cursor: pointer;
-}
-#formDN_btn:hover {
-    opacity: 0.8;
 }
 #formDK_btn {
     display: block;
@@ -149,56 +107,91 @@ form {
     border: 1px solid #fff;
     cursor: pointer;
 }
-#form_btn:hover {
+#formDK_btn:hover {
     opacity: 0.8;
 }
-#form_message {
-    color: red; 
-    font-size: 1.2rem; 
-    margin-top: 0.8rem;
-    text-align: left;
-    padding-left: 2.6rem;
-}
-#register_redirect:hover {
-    font-weight: bold;
-}
-#btn_social {
-    display: flex;
-    width: 90%;
-    height: 4.8rem;
-    background-color: #fff;
-    margin: 1.2rem auto 1.2rem auto;
-    border-radius: 1rem;
-    border: 1px solid #e4e8ec;
-    font-size: 1.6rem;
-    cursor: pointer;
-    align-items: center;
-    justify-content: center;
-}
-#btn_social:hover {
-    border: 1px solid #4d8dff;
-}
-#btn_social .fa-google {
-    margin-right: 1rem;
-    color: #eb4335;
-}
-#right_image {
-    position: absolute;
-    width: 30rem;
-    height: 24rem;
-    object-fit: contain;
-    bottom: 0;
-    right: 0;
-}
-#form_message {
-    color: red; 
-    font-size: 1.2rem; 
-    margin-top: 0.8rem;
-    text-align: left;
-    padding-left: 2.6rem;
-}
 #dateInfo {
-    margin-top: 1.4rem;
     position: relative;
     text-align: left;
+    margin-left: 1.2rem;
+}
+.preview {
+    border: 2px solid #dddddd;
+    margin-top: 1.6rem;
+    width: 100%;
+    height: 15rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+.preview_image {
+    display: block;
+    width: 100%;
+    object-fit: contain;
+}
+.preview_text {
+    display: none;
+    font-size: 1.8rem;
+    color: #cccccc;  
+}
+.blur {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: none;
+    z-index: 300;
+}
+.blur_overllay {
+    position: absolute;
+    background-color: rgba(0,0,0,0.4);
+    width: 100%;
+    height: 100%;
+}
+.register_alert-success {
+    position: relative;
+    z-index: 20;
+    background-color: var(--color-white);
+    margin: auto;
+    border-radius: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 50rem;
+    height: 28rem;
+    text-align: center;
+}
+.register_alert-success .far {
+    font-size: 8rem;
+    padding: 1.2rem;
+    color: #49d66c;
+}
+.register_alert-success-text {
+    font-size: 2rem;
+    color: var(--color-black);
+    padding: 1.2rem;
+    margin-bottom: 1rem;
+}
+.register_alert-success-btn {
+    display: flex;
+    width: 16rem;
+    height: 4.6rem;
+    text-align: center;
+    text-decoration: none;
+    background-color: #4ac3ff;
+    color: var(--color-white);
+    font-size: 2rem;
+    padding: 0.8rem;
+    justify-content: center;
+    align-items: center;
+    border-radius: 2rem;
+    box-shadow: 0.2rem 0.2rem 0.4rem rgba(0,0,0,0.05);
+    cursor: pointer;
+    border: 1px solid;
+}
+.register_alert-success-btn:hover {
+    opacity: 0.7;
 }

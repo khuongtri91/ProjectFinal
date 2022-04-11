@@ -1,51 +1,101 @@
-import React from 'react';
+import React, { useEffect, useState, useLayoutEffect, useRef } from 'react';
+import { getCookie } from '../../cookie/cookieHandler';
+import axios from 'axios';
+import BtnRequest from '../Button/BtnRequest';
+import ChatBox from '../ChatBox/ChatBox';
+import AlertRequest from '../Alert/AlertRequest';
 
 function PostDetail() {
+    const [illnessInfo, setIllnessInfo] = useState();
+    const [imageIllness, setImageIllness] = useState();
+    const [categoryName, setCategoryName] = useState();
+    const userInfo = getCookie('userAccess').split(',');
+    const [advisor, setAdvisor] = useState();
+    const [type, setType] = useState();
+    const chatRef = useRef(), alertRef = useRef();
+    const [advisorInfo, setAdvisorInfo] = useState('');
+    const idBenh = getCookie('numPost');
+
+    useEffect(() => {
+        console.log(idBenh);
+    },[idBenh])
+    useEffect(() => {
+        async function fetchData() {            
+            const { data } = await axios.get(`http://localhost:3001/Illness/getIllnessByID/${idBenh}`);
+            setIllnessInfo(data[0]);
+        }
+        fetchData();
+    }, []);
+    useEffect(() => {
+        async function fetchData() {
+            const { data } = await axios.get(`http://localhost:3001/Illness/getIllnessImageByID/${idBenh}`);
+            setImageIllness(data[0])
+        }
+        fetchData();
+    }, []);
+    useEffect(() => {
+        async function fetchData() {          
+            const { data } = await axios.get(`http://localhost:3001/getAccountType/${parseInt(userInfo[0])}`);
+            setType(data[0].tenLoaiTaiKhoan);           
+        }
+        if(userInfo[0] !== '') fetchData();
+        else setType();
+    }, []);
+    useEffect(() => {
+        async function fetchData() {
+            const { data } = await axios.get(`http://localhost:3001/Illness/getCategoryNameByID/${idBenh}`);
+            setCategoryName(data[0]);  
+        }
+        fetchData();
+    }, []);
+    useEffect(() => {   
+        async function fetchData() {
+            const { data } = await axios.get(`http://localhost:3001/Illness/getUserByID/${illnessInfo.maChuyenGia}`);
+            setAdvisor(data[0]);
+        }
+        if(illnessInfo) fetchData();         
+    }, [illnessInfo])
+    function handleRequest(advisor1) {
+        if(userInfo[0] !== '') {
+            setAdvisorInfo(advisor1);   
+            chatRef.current.chatappShow();
+          }
+          else {
+            alertRef.current.style.display = 'flex';
+          }
+    }
 
     return (
         <>
-            <section>
-                <div class="container">
-                    <h1>Bệnh Về Mắt</h1>        
-                </div>
-                <div class="container">
-                    <div class="row">
-                        <div class="col-8">
-                            <ul class="list-unstyled">
-                                <li class="media">
-                                    <div class="media-body">
-                                        <img src="/images/blog/blog-4.jpg"  alt="..." class="img-thumbnail" />
-                                        <h5 class="mt-0 mb-1">List-based media object</h5>
-                                        Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-                                        Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-                                        Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-                                        Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-                                    </div>
-                                </li>
-                                <li class="media my-4">
-                                    <img class="mr-3" src="/images/blog/blog-4.jpg" width="64" height="64" alt="Generic placeholder image" />
-                                    <div class="media-body">
-                                        <h5 class="mt-0 mb-1">List-based media object</h5>
-                                        Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-                                    </div>
-                                </li>
-                                <li class="media">
-                                    <img class="mr-3" src="/images/blog/blog-4.jpg" width="64" height="64" alt="Generic placeholder image" />
-                                    <div class="media-body">
-                                        <h5 class="mt-0 mb-1">List-based media object</h5>
-                                        Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="col-4">
-                            <img src="images/team/test-thumb1.jpg" alt="" class="img-fluid" />
-                            <p>Chuyên gia tư vấn : Lâm Đăng Khoa</p>
-                            <button type="button" name="" id="" class="btn btn-primary" ></button>
+            {illnessInfo && imageIllness && categoryName && advisor &&
+                <section>
+                    <div class="container">
+                        <h1>{categoryName.tenChuyenMuc}</h1>        
+                    </div>
+                    <div class="container">
+                        <div class="row" style={{flexWrap: 'unset'}}>
+                            <div class="col-8">
+                                <ul class="list-unstyled">
+                                    <li class="media">
+                                        <div class="media-body">
+                                            <img src={require(`../../../public/images/dtb/${imageIllness.anh}`)}  alt="" class="img-thumbnail" />
+                                            <h1>{illnessInfo.tieuDeBenh}</h1>
+                                            {illnessInfo.chiTietBenh}
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div style={{display: 'flex', alignItems: 'center', flexDirection: 'column', marginLeft: '5rem', marginTop: '6rem'}}>
+                                <img src="images/team/test-thumb1.jpg" alt="" class="img-fluid" />
+                                <p style={{marginTop: '1.6rem', fontSize: '1.6rem', fontWeight: 'bold'}}>Chuyên gia tư vấn : {advisor.ten}</p>
+                                {(type === 'User' && <BtnRequest handleRequest={handleRequest} obj={advisor} />) || (!type && <BtnRequest handleRequest={handleRequest} obj={advisor} />)}
+                            </div>
                         </div>
                     </div>
-                </div>
-            </section>
+                </section>
+            }
+            <ChatBox ref={chatRef} maNguoiGui={parseInt(userInfo[0])} maNguoiNhan={advisorInfo.maNguoiDung} />
+            <AlertRequest ref={alertRef} />
         </>
     );
 }

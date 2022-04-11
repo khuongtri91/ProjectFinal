@@ -29,9 +29,9 @@ function Signin() {
     async function handleOnsubmit(x) {
         const { data } = await axios.get("http://localhost:3001/Signin/getAccount");
         const info = { tenDN: document.querySelector('#formGroup_input1').value, pass: document.querySelector('#formGroup_input2').value};
-        const checkInfo = data.some(obj => obj.tenDangNhap == info.tenDN && obj.matKhau == info.pass);
+        const checkInfo = data.some(obj => obj.tenDangNhap === info.tenDN && obj.matKhau === info.pass);
         if(checkInfo) {
-            const response = await axios.get(`http://localhost:3001/Signin/getUser/${x.tenDangNhap}`);
+            const response = await axios.get(`http://localhost:3001/Signin/getUser/${x.tenDangNhap.trim()}`);
             const y = response.data[0];
             setCookie('userAccess',`${y.maNguoiDung},${y.ten},${y.soDienThoai},${y.email},${y.diaChi},${y.gioiTinh},${y.ngaySinh},${y.anh}`);
             navigate('/');
@@ -47,9 +47,9 @@ function Signin() {
     return (
         <div id="modal">          
             <div id="modal_middle"> 
-                <Link to="/" id="modal_title">Healthy Care</Link>                      
+                <Link to="/" id="modal_title1">Healthy Care</Link>                      
                 <Formik id="formDN" style={{position: 'relative'}} initialValues={initialValues} onSubmit={handleOnsubmit} validationSchema={validationSchema}>
-                    <Form style={{"position":"relative","display":"block","width":"42rem","height":"70rem", "border": "1px solid #e4e8ec", "boxShadow":"0.2rem 0.2rem 0.4rem rgba(0,0,0,0.05)","borderRadius": "1.6rem", "display" : "flex", "flexDirection": "column", "justifyContent": "center", "backgroundColor": "#fff"}}>
+                    <Form style={{"position":"relative","width":"42rem","height":"70rem", "border": "1px solid #e4e8ec", "boxShadow":"0.2rem 0.2rem 0.4rem rgba(0,0,0,0.05)","borderRadius": "1.6rem", "display" : "flex", "flexDirection": "column", "justifyContent": "center", "backgroundColor": "#fff"}}>
                         <div id="form_title">
                             <h3 id="form_title-text">Đăng nhập</h3>
                         </div>
@@ -58,20 +58,15 @@ function Signin() {
                             <Field id="formGroup_input1" name="tenDangNhap" placeholder="Nhập email của bạn" autoComplete="off" onInput={e => {setUserName(e.target.value)}} value={userName.trim()} />
                             <ErrorMessage name="tenDangNhap" component="span" style={{display: 'block', color: 'red', textAlign: 'left', marginLeft: '2.8rem', marginTop: '.6rem', fontSize: '1.4rem'}} />
                             <span style={{display: 'none', color: 'red', textAlign: 'left', marginLeft: '2.8rem', marginTop: '.6rem', fontSize: '1.4rem'}} ref={userNameMS}></span>
-                            <Field id="formGroup_input2" name="matKhau" placeholder="Nhập mật khẩu của bạn" autoComplete="off" onInput={e => {setPassword(e.target.value)}} value={password.trim()} />
+                            <Field id="formGroup_input2" name="matKhau" placeholder="Nhập mật khẩu của bạn" autoComplete="off" onInput={e => {setPassword(e.target.value)}} value={password.trim()} type="password" />
                             <ErrorMessage name="matKhau" component="span" style={{display: 'block', color: 'red', textAlign: 'left', marginLeft: '2.8rem', marginTop: '.6rem', fontSize: '1.4rem'}} />
                             <span style={{display: 'none', color: 'red', textAlign: 'left', marginLeft: '2.8rem', marginTop: '.6rem', fontSize: '1.4rem'}} ref={passMS}></span>
                         </div>
                         <span style={{"fontSize":"1.4rem","padding":"1rem","position":"relative","top":"1.4rem","fontStyle":"italic"}}>Nếu bạn chưa có tài khoản, vui lòng 
-                            <a id="register_redirect" style={{color: "var(--color-blue)"}} href=""> Đăng ký </a>
+                            <Link id="register_redirect" style={{color: "var(--color-blue)"}} to="/Signup"> Đăng ký </Link>
                             tại đây
                         </span>
-                        <button id="formDN_btn" type="submit">Đăng nhập</button>                   
-                        <span id="form_text2">Hoặc</span>                                                           
-                        <div id="btn_social">
-                            <i className="fab fa-google"></i>
-                            <span>Sử dụng tài khoản Google</span>
-                        </div>          
+                        <button id="formDN_btn" type="submit">Đăng nhập</button>         
                     </Form>
                 </Formik>   
             </div>                         
