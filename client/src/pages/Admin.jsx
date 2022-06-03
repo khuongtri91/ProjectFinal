@@ -1,16 +1,16 @@
 import React from 'react';
-import UserList from '../components/UserList/UserList';
+import Admin from '../components/Admin/Admin';
 import Header from '../components/Header/Header';
 import Footer from '../components/Footer/Footer';
 
-function ManageUser() {
+function BMI() {
   return (
     <>
         <Header />
-            <UserList />
+            <Admin />
         <Footer />
     </>
   )
 }
 
-export default ManageUser;
+export default BMI;

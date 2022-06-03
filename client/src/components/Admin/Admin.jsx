@@ -1,19 +1,30 @@
 import React from 'react';
 import "./style.css";
+import ManagementAccount from '../ManagementAccount/ManagementAccount';
+import ManagementAccountType from '../ManagementAccountType/ManagementAccountType';
 import UserList from '../UserList/UserList';
 
-function home() {
+function Admin() {
     return (
-        <div className='home'>
-            {/* <ManagementAccount/> */}
-            {/* <ManagementAccountType/> */}
-            <UserList/>
-            {/* chỗ ni là render ra thanh bên phải 
-            vd: mi bấm vô chức năng nào thì hắn render ra cái form của chức năng đó
-             */}
-            {/* <ManagementDisease/> */}
+        <div>
+            <div className="containers">
+                <div className='sidebar'>
+                    <div className="sidebarMenu">
+                        <h3 className='sidebarTitle'>Chức năng Admin</h3>
+                        <ul className='sidebarList'>
+                            <li className='sibarListItem '>Quản Lý Tài Khoản</li>
+                            <li className='sibarListItem'>Quản Lý Loại Tài Khoản</li>
+                            <li className='sibarListItem'>Quản Lý Người Dùng</li>
+                            <li className='sibarListItem'>Quản Lý Bệnh</li>
+                        </ul>
+                    </div>
+                </div>
+                <div className="home">
+                    <UserList />
+                </div>
+            </div>
         </div>
     );
 }
 
-export default home;
+export default Admin;
