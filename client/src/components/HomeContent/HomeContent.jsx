@@ -162,7 +162,7 @@ function HomeContent() {
                                   <span style={{display: 'block', fontWeight: 'bold'}}>{obj.ten}</span>
                                   <span>{obj.email}</span>
                                   <p>
-                                    <Link to="">Xem Thông tin chuyên gia</Link>
+                                    
                                   </p>
                                   {(type === 'User' && <BtnRequest handleRequest={handleRequest} obj={obj} />) || (!type && <BtnRequest handleRequest={handleRequest} obj={obj} />)}
                                 </div>                  

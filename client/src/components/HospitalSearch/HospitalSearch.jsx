@@ -29,7 +29,7 @@ function HospitalSearch() {
   const [map, setMap] = useState();
   const [flag, setFlag] = useState(false);
   const { isLoaded } = useLoadScript({
-    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
+    googleMapsApiKey: 'AIzaSyA61kKFRHneDlKcgKa7lCfOKk7zV1LTh1Q',
     libraries
   })
 
@@ -59,7 +59,7 @@ function HospitalSearch() {
   }, [flag]);
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(({ coords: { latitude, longitude } }) => {
-      setCoords({ lat: latitude, lng: longitude });
+      setCoords({ lat: 16.054407, lng: 108.202164 });
     });
   }, []);
   

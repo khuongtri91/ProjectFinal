@@ -27,7 +27,7 @@ function ChatBox({maNguoiGui, maNguoiNhan}, ref) {
             const { data } = await axios.get(`http://localhost:3001/getMessageById?senderID=${maNguoiGui}&receiverID=${maNguoiNhan}`);  
             setMessageList(data);
         }
-        if(!isNaN(maNguoiNhan) && maNguoiGui !== '') {
+        if(!isNaN(maNguoiNhan) && maNguoiGui != '') {
             fetchData();
         }
     }, [maNguoiNhan, maNguoiGui]);
@@ -74,7 +74,7 @@ function ChatBox({maNguoiGui, maNguoiNhan}, ref) {
                 </header>
                 <main>
                     {messageList.length >= 1 && messageList.map((obj,index) => {
-                        if(userInfo[0] === obj.maNguoiGui)
+                        if(userInfo[0] == obj.maNguoiGui)
                             return (<ChatLeft key={index} message={obj.noiDung} maNguoiGui={maNguoiGui} thoiGianGui={obj.thoiGianGui} />)
                         else
                             return <ChatRight key={index} message={obj.noiDung} maNguoiNhan={maNguoiNhan} />
