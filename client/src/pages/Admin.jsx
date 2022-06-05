@@ -8,7 +8,7 @@ function BMI() {
     <>
         <Header />
             <Admin />
-        <Footer />
+        <Footer custom={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} />
     </>
   )
 }

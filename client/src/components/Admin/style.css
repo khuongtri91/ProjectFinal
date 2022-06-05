@@ -1,41 +1,8 @@
-.home{
-    flex: 4;
-    border-top:1px solid rgb(216, 216, 231);
-    margin-top: 0.5px;
-}
-.sidebar{
-    flex: 1;
-    height: 100vh;
-    background-color: rgb(244, 250, 249);
-    position: sticky;
-    top:  50px;
-}
-.sidebarWrapper{
-    padding: 20px;
-    color: #555;
-}
-.sidebarMenu{
-    margin-bottom: 10px;
-}
-.sidebarTitle{
-    font-size: 20px;
-    color: rgb(187,186,186);
-    text-align: center;
-    margin-top: 3px;
-    margin-bottom: 0;
-}
-.sidebarList{
-    list-style: none;
-    padding: 5px;
-}
-.sibarListItem{
-    padding: 5px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    border-radius: 10px;
-}
-
-.sibarListItem:hover {
-    background-color: rgb(194, 194, 245);
+hr {
+    border: 0;
+    clear:both;
+    display:block;
+    width: 96%;               
+    background-color:#A9A9A9;
+    height: 1px;
 }

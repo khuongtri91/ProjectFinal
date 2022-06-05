@@ -69,7 +69,7 @@ function HomeContent() {
             <div className="container">
               <div className="row"></div>
             </div>
-            <div className="container">
+            <div className="container">         
               {illness.length >= 1 && imageIllness.length >= 1 &&                                            
                   <div className="row">
                     <div className="col-lg-5">

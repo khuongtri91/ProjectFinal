@@ -20,6 +20,7 @@ function Header(props, ref) {
   const [userList, setUserList] = useState([]);
   const [flag, setFlag] = useState(false);
   const [category, setCategory] = useState([]);
+  const [type, setType] = useState();
   const chatRef = useRef();
 
   useImperativeHandle(ref, () => ({
@@ -54,6 +55,14 @@ function Header(props, ref) {
       setMessage(data);
     }
     if(userInfo[0] !== '') fetchData();
+  }, []);
+  useEffect(() => {
+    async function fetchData() {          
+      const { data } = await axios.get(`http://localhost:3001/getAccountType/${parseInt(userInfo[0])}`);
+      setType(data[0].tenLoaiTaiKhoan);        
+    }
+    if(userInfo[0] !== '') fetchData();
+    else setType();
   }, []);
   useEffect(() => { 
     async function fetchData() {
@@ -207,7 +216,18 @@ function Header(props, ref) {
                               <i style={{fontSize: '1.8rem'}} className="fas fa-user-circle" />
                               <p className="info_header-item-text" id="profileRedirect" style={{marginRight: '2rem'}}>Hồ sơ cá nhân</p>
                             </Link>
-                            <div style={{position: 'relative', marginTop: '0.3rem'}} className="line" />                                                       
+                            <div style={{position: 'relative', marginTop: '0.3rem'}} className="line" />
+                            {type === 'Admin' && 
+                               (
+                                 <>
+                                  <Link className="info_header-item" to="/Admin">                             
+                                    <i style={{fontSize: '1.8rem'}} class="fa-solid fa-gear"></i>
+                                    <p className="info_header-item-text" id="profileRedirect" style={{marginRight: '2rem'}}>Quản lý website</p>
+                                  </Link>
+                                  <div style={{position: 'relative', marginTop: '0.3rem'}} className="line" />
+                                 </>
+                               )    
+                            }                                                                
                             <div className="info_header-item" onClick={handleLogout}>
                               <i className="fas fa-sign-out-alt" />
                               <p className="signout_text" style={{marginRight: '2rem'}}>Đăng xuất</p>

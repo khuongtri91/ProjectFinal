@@ -1,125 +1,55 @@
 import React from "react";
-import "./ManagementDisease.css";
+import "./style.css";
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Link, useNavigate } from 'react-router-dom';
+import * as Yup from 'yup';
+import axios from 'axios';
+
 function ManagementDisease() {
+
+  function handleDelete() {
+
+  }
+
   return (
-    <div>
-      <div className="containerss">
-        <form action="">
-          <div className="frm_MaUser">
-            <div className="input-box">
-              <span className="details">Mã bệnh</span>
-              <input
-                id="input_maBenh"
-                className="input_container"
-                type="text"
-                placeholder=""
-              />
-            </div>
-          </div>
-          <div className="frm_MaUser">
-            <div className="input-box">
-              <span className="details">Tên bệnh</span>
-              <input
-                id="input_tenbenh"
-                className="input_container"
-                type="text"
-                placeholder=""
-              />
-            </div>
-          </div>
-          <div className="frm_MaUser">
-            <div className="input-box">
-              <span className="details">Chi tiết bệnh</span>
-              <input
-                id="input_Chitietbenh"
-                className="input_container"
-                type="text"
-                placeholder=""
-              />
-            </div>
-          </div>
-          <div className="frm_MaUser">
-            <div className="input-box">
-              <span className="details">Mã người tư vấn</span>
-              <input
-                id="input_MaNTV"
-                className="input_container"
-                type="text"
-                placeholder=""
-              />
-            </div>
-          </div>
-          <div className="frm_MaUser">
-            <div className="input-box">
-              <span className="details">Mã bệnh viện</span>
-              <input
-                id="input_MaBV"
-                className="input_container"
-                type="text"
-                placeholder=""
-              />
-            </div>
-          </div>
-
-          <div className="frm_MaUser">
-            <div className="input-box">
-              <span className="details">Mã chuyên mục</span>
-              <input
-                id="input_Machuyenmuc"
-                className="input_container"
-                type="text"
-                placeholder=""
-              />
-            </div>
-          </div>
-        </form>
-      </div>
-
-      <div class="table-responsive">
-        <table class="table table-bordered">
-          <thead className="title">
-            <tr>
-              <th>Mã bệnh</th>
-              <th>Tên bệnh</th>
-              <th>Chi tiết bệnh</th>
-              <th>Mã người tư vấn</th>
-              <th>Mã bệnh viện</th>
-              <th>Mã chuyên mục</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>0004</td>
-              <td>Đau mắt</td>
-              <td>abcdyzya</td>
-              <td>0023</td>
-              <td>05- Nguyen Hoang - Da Nang</td>
-              <td>Mắt</td>
-            </tr>
-            <tr>
-              <td>0004</td>
-              <td>Thoát vị đĩa đệm</td>
-              <td>abcdyzya</td>
-              <td>0023</td>
-              <td>05- Nguyen Hoang - Da Nang</td>
-              <td>Phần mềm</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <div className="button_Container">
-        <div className="divAllButton">
-          <div className="button_Them">
-            <button>Thêm</button>
-          </div>
-          <div className="button_Them">
-            <button>Sửa</button>
-          </div>
-          <div className="button_Them">
-            <button>Xóa</button>
-          </div>
+    <div style={{position: 'absolute', left: '12%', right: '4%'}}>   
+        <br />      
+        <Link class="btn btn-primary mb-4" to="/Admin/AddDiseaseForm" style={{fontSize: '1.2rem', marginLeft: '1.8rem'}}>Add</Link>
+        <div style={{marginRight: '.4rem'}} class="d-flex align-items-center">	
+          <table class="table table-hover">
+            <thead class="thead-dark">
+              <tr>
+                <th>Tiêu đề bệnh</th>
+                <th style={{maxWidth: '50rem'}}>Chi tiết bệnh</th>
+                <th>Mã chuyên mục</th>
+                <th>Mã chuyên gia</th>
+                <th>Update/Delete</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Mắt</td>
+                <td style={{maxWidth: '50rem'}}>Đôi mắt chính là cửa sổ tâm hồn, vì thế đôi mắt cần phải được chăm chút và bảo vệ để luôn sáng ngời sức sống. Hello Bacsi sẽ mách bạn 5 bí quyết để giữ cho đôi mắt khỏe đẹp rất đơn</td>
+                <td>3</td>
+                <td>4</td>                  
+                <td>
+                  <Link to="/Admin/UpdateDiseaseForm" class="btn btn-info mr-3" style={{fontSize: '1.2rem'}}>Update</Link>
+                  <button class="btn btn-danger" style={{fontSize: '1.2rem'}} onClick={handleDelete}>Delete</button>           
+                </td>
+              </tr>
+              <tr>
+                <td>Mắt</td>
+                <td>Đôi mắt chính là cửa sổ tâm hồn, vì thế đôi mắt cần phải được chăm chút và bảo vệ để luôn sáng ngời sức sống. Hello Bacsi sẽ mách bạn 5 bí quyết để giữ cho đôi mắt khỏe đẹp rất đơn</td>
+                <td>3</td>
+                <td>4</td>                  
+                <td>
+                  <Link to="/Admin/UpdateDiseaseForm" class="btn btn-info mr-3" style={{fontSize: '1.2rem'}}>Update</Link>
+                  <button class="btn btn-danger" style={{fontSize: '1.2rem'}} onClick={handleDelete}>Delete</button>           
+                </td>
+              </tr>
+            </tbody>          
+          </table>
         </div>
-      </div>
     </div>
   );
 }

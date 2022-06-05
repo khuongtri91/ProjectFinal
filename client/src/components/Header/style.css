@@ -84,6 +84,15 @@
     margin: 0 1.2rem;
     padding-left: 1.2rem;
   }
+  .info_header-item .fa-solid {
+    position: relative;
+    font-size: 1.6rem;
+    color: var(--color-textgraybold);
+    margin: 0 1.2rem;
+    top: .1rem;
+    left: .01rem;
+    padding-left: 1.2rem;
+  }
   .info_header-item-text {
     position: relative;
     font-size: 1.6rem;

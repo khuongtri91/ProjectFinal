@@ -1,9 +1,9 @@
 import React from 'react';
 
-function Footer() {
+function Footer( { custom } ) {
 
     return (
-        <footer class="footer section bg-dark">
+        <footer class="footer section bg-dark" style={custom && custom}>
 	        <div class="container">
                 <div class="row">
                     <div class="col-lg-4 mr-auto col-sm-6">

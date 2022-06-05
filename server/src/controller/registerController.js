@@ -1,8 +1,32 @@
 const sql = require('mssql');
 const { config } = require('../database/config');
 const assert = require('assert');
+const bcrypt = require('bcrypt');
+const nodemailer = require('nodemailer');
+const {v4: uuidv4} = require('uuid');
+require('dotenv').config();
 
 class RegisterController {
+    async verifyEmail(req, res) {
+        let transporter = nodemailer.createTransport({
+            service: "gmail",
+            auth: {
+                user: process.env.AUTH_EMAIL,
+                pass: process.env.AUTH_PASS
+            }
+        })
+        transporter.verify((error, success) => {
+            if(error) {
+                console.log(error);
+                res.json("Error");
+            }
+            else {
+                res.json("Success");
+                console.log("Ready for messages");
+                console.log(success);
+            }
+        })
+    }
     async addNewUser(req, res) {
         let gt;
         if(req.body.gioiTinh == 'Nam') gt = 1;
@@ -20,6 +44,7 @@ class RegisterController {
                 res.json("Đăng ký thành công!");
             }           
         } catch (err) {
+            res.json("Đăng ký thất bại!!!");
             assert.equal(null, err);
         }
     }

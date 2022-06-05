@@ -12,6 +12,12 @@ import BMR from '../src/pages/BMR';
 import Profile from '../src/pages/Profile';
 import HospitalSearchPage from '../src/pages/HospitalSearchPage';
 import Admin from '../src/pages/Admin';
+import AddingUserForm from '../src/pages/AddingUserForm';
+import UpdatingUserForm from '../src/pages/UpdatingUserForm';
+import UpdatingAccountForm from '../src/pages/UpdatingAccountForm';
+import UpdatingAccountTypeForm from '../src/pages/UpdatingAccountTypeForm';
+import AddingDiseaseForm from '../src/pages/AddingDiseaseForm';
+import UpdatingDiseaseForm from '../src/pages/UpdatingDiseaseForm';
 
 function App() {
     return (  
@@ -24,8 +30,15 @@ function App() {
               <Route path="/Category" element={<Category />} />
               <Route path="/BMI" element={<BMI />} />
               <Route path="/BMR" element={<BMR />} />
-              <Route path="/Profile" element={<Admin />} />
+              <Route path="/Profile" element={<Profile />} />
               <Route path="/HospitalSearch" element={<HospitalSearchPage />} />
+              <Route path="/Admin" element={<Admin />} />
+              <Route path="/Admin/AddUserForm" element={<AddingUserForm />} />
+              <Route path="/Admin/UpdateUserForm" element={<UpdatingUserForm />} />
+              <Route path="/Admin/UpdateAccountForm" element={<UpdatingAccountForm />} />
+              <Route path="/Admin/UpdateAccountTypeForm" element={<UpdatingAccountTypeForm />} />
+              <Route path="/Admin/AddDiseaseForm" element={<AddingDiseaseForm />} />
+              <Route path="/Admin/UpdateDiseaseForm" element={<UpdatingDiseaseForm />} />
           </Routes>              
     );
 }

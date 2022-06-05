@@ -3,7 +3,7 @@ const { config } = require('../database/config.js');
 const assert = require('assert');
 
 class HomeController {
-    async getAdvisorList(req, res) {   
+    async getAdvisorList(req, res) { 
         try {   
             let pool = await sql.connect(config);     
             let result = await pool.request().query('EXEC FindAdvisor');
